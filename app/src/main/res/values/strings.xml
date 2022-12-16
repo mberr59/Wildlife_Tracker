@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Wildlife Tracker</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_text">Login</string>
 </resources>

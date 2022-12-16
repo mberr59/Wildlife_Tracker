@@ -1,9 +1,12 @@
-package com.example.wildlifetracker;
+package com.example.wildlifetracker.UI;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.app.AlertDialog;
+import android.location.Location;
 import android.os.Bundle;
 
+import com.example.wildlifetracker.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -43,14 +46,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng park = new LatLng(34.361664, -86.305595);
-        mMap.addMarker(new MarkerOptions().position(park).title("Deer 1"));
+        // Add a marker in Guntersville State Park and move the camera
+        LatLng park = new LatLng(34.391442, -86.202289);
+        mMap.addMarker(new MarkerOptions().position(park).title("Park"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(park));
-        mMap.setMinZoomPreference(20);
+        mMap.setMinZoomPreference(12);
+        LatLng deer1 = new LatLng(34.361663, -86.216750);
+        mMap.addMarker(new MarkerOptions().position(deer1).title("Deer 1"));
+        isTargetInRange(park, deer1);
+    }
 
-        LatLng deer2 = new LatLng(34.361663, -86.305597);
-        mMap.addMarker(new MarkerOptions().position(deer2).title("Deer 2"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(deer2));
+    public void isTargetInRange(LatLng center, LatLng target) {
+        float[] distance = new float[1];
+        Location.distanceBetween(center.latitude, center.longitude, target.latitude, target.longitude, distance);
+        if (distance[0] > 3200.0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+            builder.setTitle("Target out of Range");
+            builder.setMessage("Target has moved out of range.");
+            builder.setPositiveButton("OK",(dialog, which) ->{
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 }
