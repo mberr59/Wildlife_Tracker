@@ -63,6 +63,15 @@ public class Repository {
         }
     }
 
+    public void deleteUser (UserEntity user) {
+        databaseExecutor.execute(() -> mUserDAO.deleteUser(user));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteAnimal (AnimalEntity animal) {
         databaseExecutor.execute(() -> mAnimalDAO.deleteAnimal(animal));
         try {
