@@ -1,5 +1,6 @@
 package com.example.wildlifetracker.DAO;
 
+import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -10,6 +11,7 @@ import com.example.wildlifetracker.Entity.AnimalEntity;
 
 import java.util.List;
 
+@Dao
 public interface AnimalDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

@@ -10,7 +10,7 @@ import com.example.wildlifetracker.DAO.UserDAO;
 import com.example.wildlifetracker.Entity.AnimalEntity;
 import com.example.wildlifetracker.Entity.UserEntity;
 
-@Database(entities = {UserEntity.class, AnimalEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {UserEntity.class, AnimalEntity.class}, version = 2, exportSchema = false)
 public abstract class WildlifeDatabaseBuilder extends RoomDatabase {
 
     public abstract UserDAO userDAO();
