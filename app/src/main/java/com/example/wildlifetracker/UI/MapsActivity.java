@@ -5,6 +5,8 @@ import androidx.fragment.app.FragmentActivity;
 import android.app.AlertDialog;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.wildlifetracker.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -68,5 +70,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             AlertDialog alertDialog = builder.create();
             alertDialog.show();
         }
+    }
+
+    public boolean onCreateMapMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_animal_map, menu);
+        return true;
+    }
+
+    public boolean onMapItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

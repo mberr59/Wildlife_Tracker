@@ -5,4 +5,9 @@
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_text">Login</string>
+    <string name="menu_details">Details</string>
+    <string name="menu_reports">Reports</string>
+    <string name="reports_daily">Daily Travel Distance</string>
+    <string name="reports_monthly">Weekly Travel Distance</string>
+    <string name="list_add_animal">Add New Wildlife</string>
 </resources>
