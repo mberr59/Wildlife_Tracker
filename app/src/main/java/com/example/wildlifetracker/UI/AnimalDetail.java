@@ -1,4 +1,6 @@
 package com.example.wildlifetracker.UI;
 
-public class AnimalDetail {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class AnimalDetail extends AppCompatActivity {
 }

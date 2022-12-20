@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Wildlife Tracker</string>
-    <string name="title_activity_maps">MapsActivity</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_maps">Location</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_animal_list">All Tracked Wildlife</string>
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
     <string name="login_text">Login</string>
+    <string name="menu_save">Save</string>
+    <string name="menu_delete">Delete</string>
     <string name="menu_details">Details</string>
     <string name="menu_reports">Reports</string>
     <string name="reports_daily">Daily Travel Distance</string>
     <string name="reports_monthly">Weekly Travel Distance</string>
     <string name="list_add_animal">Add New Wildlife</string>
+    <string name="animal_details">Animal Details</string>
+    <string name="animal_name_colon">Animal Name:</string>
+    <string name="animal_name">Animal Name</string>
+    <string name="animal_type_colon">Animal Type:</string>
+    <string name="animal_type">Animal Type</string>
+    <string name="animal_lat_colon">Animal Latitude:</string>
+    <string name="animal_lat">Animal Latitude</string>
+    <string name="animal_long_colon">Animal Longitude:</string>
+    <string name="animal_long">Animal Longitude</string>
+    <string name="animal_notes_colon">Animal Notes:</string>
+    <string name="animal_notes">Animal Notes</string>
 </resources>
