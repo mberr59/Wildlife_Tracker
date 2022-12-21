@@ -20,7 +20,9 @@ import com.example.wildlifetracker.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class AnimalDetail extends AppCompatActivity {
     EditText editName;
@@ -146,18 +148,43 @@ public class AnimalDetail extends AppCompatActivity {
         return convertedCoordinates;
     }
 
-    public void isTargetInRange(double[] location) {
+    public void areAnimalsInRange() {
+        ArrayList<AnimalEntity> allAnimals = new ArrayList<>(repo.getAllAnimals());
+        double[] location = new double[2];
         float[] distance = new float[1];
-        LatLng target = new LatLng(location[0], location[1]);
-        Location.distanceBetween(MapsActivity.park.latitude, MapsActivity.park.longitude, target.latitude, target.longitude, distance);
-        if (distance[0] > 3200.0) {
-            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AnimalDetail.this);
-            builder.setTitle("Target out of Range");
-            builder.setMessage("Target has moved out of range.");
-            builder.setPositiveButton("OK",(dialog, which) ->{
-            });
-            android.app.AlertDialog alertDialog = builder.create();
-            alertDialog.show();
+        for (AnimalEntity a : allAnimals) {
+            location = convertLocation(a.getLatitude(), a.getLongitude());
+            LatLng target = new LatLng(location[0], location[1]);
+            Location.distanceBetween(MapsActivity.park.latitude, MapsActivity.park.longitude, target.latitude, target.longitude, distance);
+            if (distance[0] > 3200.0) {
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AnimalDetail.this);
+                builder.setTitle("Target out of Range");
+                builder.setMessage("Target has moved out of range.");
+                builder.setPositiveButton("OK",(dialog, which) ->{
+                });
+                android.app.AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        }
+
+    }
+
+    public void animalMovementSim() {
+        ArrayList<AnimalEntity> allAnimals = new ArrayList<>(repo.getAllAnimals());
+        double [] currentLocation = new double[2];
+        float[] distance = new float[1];
+        double maxLat = 34.422940;
+        double maxLong = -86.173789;
+        double minLat = 34.356645;
+        double minLong = -86.226352;
+        for (AnimalEntity a : allAnimals) {
+            currentLocation = convertLocation(a.getLatitude(), a.getLongitude());
+            do {
+                double randomLat = ThreadLocalRandom.current().nextDouble(minLat, maxLat);
+                double randomLong = ThreadLocalRandom.current().nextDouble(minLong, maxLong);
+                LatLng movement = new LatLng(randomLat, randomLong);
+                Location.distanceBetween(currentLocation[0], currentLocation[1], movement.latitude, movement.longitude, distance);
+            } while (distance[0] >= 200);
         }
     }
 
