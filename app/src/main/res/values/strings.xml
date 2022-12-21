@@ -24,4 +24,5 @@
     <string name="animal_long">Animal Longitude</string>
     <string name="animal_notes_colon">Animal Notes:</string>
     <string name="animal_notes">Animal Notes</string>
+    <string name="animal_map">Track</string>
 </resources>

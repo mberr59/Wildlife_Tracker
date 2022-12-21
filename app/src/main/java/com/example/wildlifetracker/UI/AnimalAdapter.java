@@ -31,7 +31,13 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
                     intent.putExtra("animalID", currentAnimal.getAnimalID());
                     intent.putExtra("name", currentAnimal.getName());
                     intent.putExtra("type", currentAnimal.getType());
+                    intent.putExtra("latitude", currentAnimal.getLatitude());
+                    intent.putExtra("longitude", currentAnimal.getLongitude());
+                    intent.putExtra("distanceMonth", currentAnimal.getDistanceMonth());
+                    intent.putExtra("distanceDay", currentAnimal.getDistanceDay());
                     intent.putExtra("notes", currentAnimal.getNotes());
+                    intent.putExtra("dayOfMonth", currentAnimal.getDayOfMonth());
+                    intent.putExtra("monthOfYear", currentAnimal.getMonthOfYear());
                     animalContext.startActivity(intent);
                 }
             });

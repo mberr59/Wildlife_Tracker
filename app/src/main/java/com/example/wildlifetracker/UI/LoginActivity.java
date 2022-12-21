@@ -14,6 +14,7 @@ import com.example.wildlifetracker.R;
 import com.example.wildlifetracker.databinding.ActivityMapsBinding;
 import com.google.android.gms.maps.SupportMapFragment;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,6 +26,15 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //TODO --UNCOMMENT THE FOLLOWING CODE TO CREATE THE
+        // "TEST" USER AND "ADMIN" USER--
+
+        /* Repository repo = new Repository(getApplication());
+        UserEntity admin = new UserEntity(1, "admin", "admin");
+        UserEntity test = new UserEntity(2, "test", "test");
+        repo.insertUser(admin);
+        repo.insertUser(test); */
     }
 
     public void openApp(View view) {

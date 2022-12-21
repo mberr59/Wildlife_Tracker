@@ -1,7 +1,9 @@
 package com.example.wildlifetracker.UI;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,6 +29,13 @@ public class AnimalListActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.setAnimals(animals);
+    }
+
+
+
+    public void loadAnimalDetail(View view) {
+        Intent intent = new Intent(AnimalListActivity.this, AnimalDetail.class);
+        startActivity(intent);
     }
 
 
