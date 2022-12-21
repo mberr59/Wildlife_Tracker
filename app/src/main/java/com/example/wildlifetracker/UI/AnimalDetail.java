@@ -2,6 +2,7 @@ package com.example.wildlifetracker.UI;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wildlifetracker.Database.Repository;
 import com.example.wildlifetracker.Entity.AnimalEntity;
 import com.example.wildlifetracker.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -137,11 +139,26 @@ public class AnimalDetail extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private double[] convertLocation(String latitude, String longitude) {
+    public static double[] convertLocation(String latitude, String longitude) {
         double[] convertedCoordinates = new double[2];
         convertedCoordinates[0] = Double.parseDouble(latitude);
         convertedCoordinates[1] = Double.parseDouble(longitude);
         return convertedCoordinates;
+    }
+
+    public void isTargetInRange(double[] location) {
+        float[] distance = new float[1];
+        LatLng target = new LatLng(location[0], location[1]);
+        Location.distanceBetween(MapsActivity.park.latitude, MapsActivity.park.longitude, target.latitude, target.longitude, distance);
+        if (distance[0] > 3200.0) {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AnimalDetail.this);
+            builder.setTitle("Target out of Range");
+            builder.setMessage("Target has moved out of range.");
+            builder.setPositiveButton("OK",(dialog, which) ->{
+            });
+            android.app.AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
     }
 
 }

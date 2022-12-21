@@ -23,6 +23,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ActivityMapsBinding binding;
     private double[] trackerCoordinates = new double[2];
     private String trackedName;
+    public static LatLng park = new LatLng(34.391442, -86.202289);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,27 +54,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Guntersville State Park and move the camera
-        LatLng park = new LatLng(34.391442, -86.202289);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(park));
         mMap.setMaxZoomPreference(16);
         mMap.setMinZoomPreference(10);
         LatLng trackedAnimal = new LatLng(trackerCoordinates[0], trackerCoordinates[1]);
         mMap.addMarker(new MarkerOptions().position(trackedAnimal).title(trackedName));
-        isTargetInRange(park, trackedAnimal);
-    }
-
-    public void isTargetInRange(LatLng center, LatLng target) {
-        float[] distance = new float[1];
-        Location.distanceBetween(center.latitude, center.longitude, target.latitude, target.longitude, distance);
-        if (distance[0] > 3200.0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-            builder.setTitle("Target out of Range");
-            builder.setMessage("Target has moved out of range.");
-            builder.setPositiveButton("OK",(dialog, which) ->{
-            });
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
     }
 
     public boolean onCreateMapMenu(Menu menu) {
