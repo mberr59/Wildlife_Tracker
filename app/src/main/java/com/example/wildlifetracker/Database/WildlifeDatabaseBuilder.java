@@ -6,15 +6,18 @@ import androidx.room.RoomDatabase;
 import androidx.room.Room;
 
 import com.example.wildlifetracker.DAO.AnimalDAO;
+import com.example.wildlifetracker.DAO.ReportDAO;
 import com.example.wildlifetracker.DAO.UserDAO;
 import com.example.wildlifetracker.Entity.AnimalEntity;
+import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.Entity.UserEntity;
 
-@Database(entities = {UserEntity.class, AnimalEntity.class}, version = 3, exportSchema = false)
+@Database(entities = {UserEntity.class, AnimalEntity.class, ReportEntity.class}, version = 4, exportSchema = false)
 public abstract class WildlifeDatabaseBuilder extends RoomDatabase {
 
     public abstract UserDAO userDAO();
     public abstract AnimalDAO animalDAO();
+    public abstract ReportDAO reportDAO();
 
     private static volatile WildlifeDatabaseBuilder INSTANCE;
 

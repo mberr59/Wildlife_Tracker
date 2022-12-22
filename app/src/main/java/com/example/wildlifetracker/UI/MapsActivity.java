@@ -2,8 +2,6 @@ package com.example.wildlifetracker.UI;
 
 import androidx.fragment.app.FragmentActivity;
 
-import android.app.AlertDialog;
-import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,7 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public boolean onCreateMapMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_animal_map, menu);
+        getMenuInflater().inflate(R.menu.menu_animal_list, menu);
         return true;
     }
 

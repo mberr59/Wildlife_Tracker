@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,6 +37,12 @@ public class AnimalListActivity extends AppCompatActivity {
     public void loadAnimalDetail(View view) {
         Intent intent = new Intent(AnimalListActivity.this, AnimalDetail.class);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_animal_list, menu);
+        return true;
     }
 
 

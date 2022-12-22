@@ -169,22 +169,28 @@ public class AnimalDetail extends AppCompatActivity {
 
     }
 
-    public void animalMovementSim() {
+    public void simAnimalMovement() {
         ArrayList<AnimalEntity> allAnimals = new ArrayList<>(repo.getAllAnimals());
         double [] currentLocation = new double[2];
         float[] distance = new float[1];
+        LatLng endMovement;
         double maxLat = 34.422940;
         double maxLong = -86.173789;
         double minLat = 34.356645;
         double minLong = -86.226352;
         for (AnimalEntity a : allAnimals) {
             currentLocation = convertLocation(a.getLatitude(), a.getLongitude());
+            LatLng currentLatLng = new LatLng(currentLocation[0], currentLocation[1]);
             do {
                 double randomLat = ThreadLocalRandom.current().nextDouble(minLat, maxLat);
                 double randomLong = ThreadLocalRandom.current().nextDouble(minLong, maxLong);
                 LatLng movement = new LatLng(randomLat, randomLong);
-                Location.distanceBetween(currentLocation[0], currentLocation[1], movement.latitude, movement.longitude, distance);
+                endMovement = movement;
+                Location.distanceBetween(currentLatLng.latitude, currentLatLng.longitude,
+                        movement.latitude, movement.longitude, distance);
             } while (distance[0] >= 200);
+            a.setLatitude(Double.toString(endMovement.latitude));
+            a.setLongitude(Double.toString(endMovement.longitude));
         }
     }
 

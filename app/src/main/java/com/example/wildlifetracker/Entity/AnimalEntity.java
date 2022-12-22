@@ -4,9 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
 @Entity(tableName = "animals")
 public class AnimalEntity {
 
