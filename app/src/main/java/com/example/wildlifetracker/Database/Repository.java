@@ -6,6 +6,8 @@ import com.example.wildlifetracker.DAO.AnimalDAO;
 import com.example.wildlifetracker.DAO.ReportDAO;
 import com.example.wildlifetracker.DAO.UserDAO;
 import com.example.wildlifetracker.Entity.AnimalEntity;
+import com.example.wildlifetracker.Entity.DailyEntity;
+import com.example.wildlifetracker.Entity.MonthlyEntity;
 import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.Entity.UserEntity;
 
@@ -21,8 +23,8 @@ public class Repository {
     private List<UserEntity> mAllUsers;
     private List<AnimalEntity> mAllAnimals;
     private List<ReportEntity> mAllReports;
-    private List<ReportEntity> mDailyReport;
-    private List<ReportEntity> mMonthlyReport;
+    private List<DailyEntity> mDailyReport;
+    private List<MonthlyEntity> mMonthlyReport;
 
     private static int NUMBER_OF_THREADS = 4;
 
@@ -145,7 +147,7 @@ public class Repository {
         return mAllReports;
     }
 
-    public List<ReportEntity>getDailyReports() {
+    public List<DailyEntity>getDailyReports() {
         databaseExecutor.execute(() -> mDailyReport = mReportDAO.getDailyReports());
         try {
             Thread.sleep(1000);
@@ -155,7 +157,7 @@ public class Repository {
         return mDailyReport;
     }
 
-    public List<ReportEntity>getMonthlyReports() {
+    public List<MonthlyEntity>getMonthlyReports() {
         databaseExecutor.execute(() -> mMonthlyReport = mReportDAO.getMonthlyReports());
         try {
             Thread.sleep(1000);

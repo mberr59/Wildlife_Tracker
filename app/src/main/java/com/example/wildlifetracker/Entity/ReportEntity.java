@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity(tableName = "reports")
 public class ReportEntity {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int reportID;
 
     private String animalName;

@@ -7,6 +7,8 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.wildlifetracker.Entity.DailyEntity;
+import com.example.wildlifetracker.Entity.MonthlyEntity;
 import com.example.wildlifetracker.Entity.ReportEntity;
 
 import java.util.List;
@@ -26,9 +28,9 @@ public interface ReportDAO {
     @Query("SELECT * FROM reports ORDER BY reportID ASC")
     List<ReportEntity> getAllReports();
 
-    @Query("SELECT animalName, animalType, animalDailyTravel FROM reports ORDER BY animalDailyTravel DESC")
-    List<ReportEntity> getDailyReports();
+    @Query("SELECT reportID, animalName, animalType, animalDailyTravel FROM reports ORDER BY animalDailyTravel DESC")
+    List<DailyEntity> getDailyReports();
 
-    @Query("SELECT animalName, animalType, animalMonthlyTravel FROM reports ORDER BY animalMonthlyTravel DESC")
-    List<ReportEntity> getMonthlyReports();
+    @Query("SELECT reportID, animalName, animalType, animalMonthlyTravel FROM reports ORDER BY animalMonthlyTravel DESC")
+    List<MonthlyEntity> getMonthlyReports();
 }

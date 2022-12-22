@@ -1,5 +1,8 @@
 package com.example.wildlifetracker.UI;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -16,21 +19,28 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wildlifetracker.Database.Repository;
 import com.example.wildlifetracker.Entity.AnimalEntity;
+import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class AnimalDetail extends AppCompatActivity {
+    public static LatLng park = new LatLng(34.391442, -86.202289);
     EditText editName;
     EditText editType;
     EditText editLat;
     EditText editLong;
     EditText editNotes;
     Repository repo = new Repository(getApplication());
+    long timeInMillis = Instant.now().toEpochMilli();
     int animalID;
     String animalName;
     String animalType;
@@ -155,23 +165,24 @@ public class AnimalDetail extends AppCompatActivity {
         for (AnimalEntity a : allAnimals) {
             location = convertLocation(a.getLatitude(), a.getLongitude());
             LatLng target = new LatLng(location[0], location[1]);
-            Location.distanceBetween(MapsActivity.park.latitude, MapsActivity.park.longitude, target.latitude, target.longitude, distance);
+            Location.distanceBetween(park.latitude, park.longitude, target.latitude, target.longitude, distance);
             if (distance[0] > 3200.0) {
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(AnimalDetail.this);
-                builder.setTitle("Target out of Range");
-                builder.setMessage("Target has moved out of range.");
-                builder.setPositiveButton("OK",(dialog, which) ->{
-                });
-                android.app.AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                Intent trackerNotif = new Intent(AnimalDetail.this, NotifReceiver.class);
+                trackerNotif.putExtra("key", "Wildlife " + a.getName() + " is leaving range.");
+                PendingIntent trackerSender = PendingIntent.getBroadcast(AnimalDetail.this, AnimalListActivity.numAlert++,
+                       trackerNotif, PendingIntent.FLAG_IMMUTABLE);
+                AlarmManager trackerAlarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                trackerAlarmManager.set(AlarmManager.RTC_WAKEUP, 5000, trackerSender);
             }
         }
 
     }
 
-    public void simAnimalMovement() {
+    public void simAnimalMovement(View view) {
         ArrayList<AnimalEntity> allAnimals = new ArrayList<>(repo.getAllAnimals());
-        double [] currentLocation = new double[2];
+        List<ReportEntity> allReports = repo.getAllReports();
+        LocalDate currentDate = LocalDate.now();
+        double [] currentLocation;
         float[] distance = new float[1];
         LatLng endMovement;
         double maxLat = 34.422940;
@@ -182,8 +193,10 @@ public class AnimalDetail extends AppCompatActivity {
             currentLocation = convertLocation(a.getLatitude(), a.getLongitude());
             LatLng currentLatLng = new LatLng(currentLocation[0], currentLocation[1]);
             do {
-                double randomLat = ThreadLocalRandom.current().nextDouble(minLat, maxLat);
-                double randomLong = ThreadLocalRandom.current().nextDouble(minLong, maxLong);
+                double randomLat = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(minLat, maxLat))
+                        .setScale(6, RoundingMode.HALF_DOWN).doubleValue();
+                double randomLong = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(minLong, maxLong))
+                        .setScale(6, RoundingMode.HALF_DOWN).doubleValue();
                 LatLng movement = new LatLng(randomLat, randomLong);
                 endMovement = movement;
                 Location.distanceBetween(currentLatLng.latitude, currentLatLng.longitude,
@@ -191,7 +204,38 @@ public class AnimalDetail extends AppCompatActivity {
             } while (distance[0] >= 200);
             a.setLatitude(Double.toString(endMovement.latitude));
             a.setLongitude(Double.toString(endMovement.longitude));
+            if (currentDate.getMonthValue() == a.getMonthOfYear()) {
+                for (ReportEntity report: allReports) {
+                    if (report.getAnimalName().equals(a.getName())) {
+                        report.setAnimalMonthlyTravel(report.getAnimalMonthlyTravel() + distance[0]);
+                        repo.updateReport(report);
+                    }
+                }
+                if (currentDate.getDayOfMonth() == a.getDayOfMonth()) {
+                    for (ReportEntity report: allReports) {
+                        if (report.getAnimalName().equals(a.getName())) {
+                            report.setAnimalDailyTravel(report.getAnimalDailyTravel() + distance[0]);
+                            repo.updateReport(report);
+                        }
+                    }
+                } else {
+                    for (ReportEntity report: allReports) {
+                        if (report.getAnimalName().equals(a.getName())) {
+                            report.setAnimalDailyTravel(0.0f + distance[0]);
+                            repo.updateReport(report);
+                        }
+                    }
+                }
+            } else {
+                for (ReportEntity report: allReports) {
+                    if (report.getAnimalName().equals(a.getName())) {
+                        report.setAnimalMonthlyTravel(0.0f + distance[0]);
+                        repo.updateReport(report);
+                    }
+                }
+            }
+            repo.updateAnimal(a);
         }
+        areAnimalsInRange();
     }
-
 }

@@ -59,7 +59,12 @@
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-    </activity>
+        </activity>
+
+        <receiver
+            android:name=".UI.NotifReceiver"
+            android:enabled="true"
+            android:exported="true"/>
 
     </application>
 

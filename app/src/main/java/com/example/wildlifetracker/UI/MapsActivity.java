@@ -21,7 +21,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ActivityMapsBinding binding;
     private double[] trackerCoordinates = new double[2];
     private String trackedName;
-    public static LatLng park = new LatLng(34.391442, -86.202289);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Guntersville State Park and move the camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(park));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(AnimalDetail.park));
         mMap.setMaxZoomPreference(16);
         mMap.setMinZoomPreference(10);
         LatLng trackedAnimal = new LatLng(trackerCoordinates[0], trackerCoordinates[1]);

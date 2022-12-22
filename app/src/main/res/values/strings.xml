@@ -11,7 +11,7 @@
     <string name="menu_details">Details</string>
     <string name="menu_reports">Reports</string>
     <string name="reports_daily">Daily Travel Distance</string>
-    <string name="reports_monthly">Weekly Travel Distance</string>
+    <string name="reports_monthly">Monthly Travel Distance</string>
     <string name="list_add_animal">Add New Wildlife</string>
     <string name="animal_details">Animal Details</string>
     <string name="animal_name_colon">Animal Name:</string>
@@ -25,4 +25,5 @@
     <string name="animal_notes_colon">Animal Notes:</string>
     <string name="animal_notes">Animal Notes</string>
     <string name="animal_map">Track</string>
+    <string name="movement_sim">Simulate Movement</string>
 </resources>
