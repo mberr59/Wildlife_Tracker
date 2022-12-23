@@ -18,6 +18,7 @@ import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AnimalListActivity extends AppCompatActivity {
@@ -34,24 +35,24 @@ public class AnimalListActivity extends AppCompatActivity {
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String newText) {
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 filterList(newText);
-                return true;
+                return false;
             }
         });
         RecyclerView recyclerView = findViewById(R.id.animalRecycler);
         Repository repo = new Repository(getApplication());
-        checkThatReportExist();
         List<AnimalEntity> animals = repo.getAllAnimals();
         final AnimalAdapter adapter = new AnimalAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         adapter.setAnimals(animals);
+        checkThatReportExist();
     }
 
     private void filterList(String text) {
@@ -100,10 +101,12 @@ public class AnimalListActivity extends AppCompatActivity {
                 }
             }
             if (!animalFound) {
+                Date currentDate = new Date(System.currentTimeMillis());
                 ReportEntity newAnimal = new ReportEntity(animal.getAnimalID(),
-                        animal.getName(), animal.getType(), animal.getDistanceDay(), animal.getDistanceMonth());
+                        animal.getName(), animal.getType(), currentDate);
                 repo.insertReport(newAnimal);
             }
+            animalFound = false;
         }
     }
 }

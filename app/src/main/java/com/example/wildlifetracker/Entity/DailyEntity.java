@@ -6,21 +6,19 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity(tableName = "reports")
-public class ReportEntity {
+@Entity(tableName = "dailyReport")
+public class DailyEntity extends ReportEntity {
     @PrimaryKey
     private int reportID;
 
     private String animalName;
     private String animalType;
     private Date dateCreated;
+    private float animalDailyTravel;
 
-
-    public ReportEntity (int reportID, String animalName, String animalType, Date dateCreated) {
-        this.reportID = reportID;
-        this.animalName = animalName;
-        this.animalType = animalType;
-        this.dateCreated = dateCreated;
+    public DailyEntity (int reportID, String animalName, String animalType, Date dateCreated, float animalDailyTravel) {
+        super(reportID, animalName, animalType, dateCreated);
+        this.animalDailyTravel = animalDailyTravel;
     }
 
     @NonNull
@@ -31,6 +29,7 @@ public class ReportEntity {
                 ", animalName='" + animalName + '\'' +
                 ", animalType='" + animalType + '\'' +
                 ", dateCreated='" + dateCreated + '\'' +
+                ", animalDailyTravel=" + animalDailyTravel +
                 '}';
     }
 
@@ -58,7 +57,15 @@ public class ReportEntity {
         this.animalType = animalType;
     }
 
-    public Date getDateCreated() { return dateCreated;}
+    public Date getDateCreated() { return dateCreated; }
 
-    public void setDateCreated(Date dateCreated) {this.dateCreated = dateCreated;}
+    public void setDateCreated(Date dateCreated) { this.dateCreated = dateCreated; }
+
+    public float getAnimalDailyTravel() {
+        return animalDailyTravel;
+    }
+
+    public void setAnimalDailyTravel(float animalDailyTravel) {
+        this.animalDailyTravel = animalDailyTravel;
+    }
 }

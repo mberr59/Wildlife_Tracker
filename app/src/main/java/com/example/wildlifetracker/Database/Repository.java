@@ -3,6 +3,8 @@ package com.example.wildlifetracker.Database;
 import android.app.Application;
 
 import com.example.wildlifetracker.DAO.AnimalDAO;
+import com.example.wildlifetracker.DAO.DailyDAO;
+import com.example.wildlifetracker.DAO.MonthlyDAO;
 import com.example.wildlifetracker.DAO.ReportDAO;
 import com.example.wildlifetracker.DAO.UserDAO;
 import com.example.wildlifetracker.Entity.AnimalEntity;
@@ -20,6 +22,8 @@ public class Repository {
     private UserDAO mUserDAO;
     private AnimalDAO mAnimalDAO;
     private ReportDAO mReportDAO;
+    private DailyDAO mDailyDAO;
+    private MonthlyDAO mMonthlyDAO;
     private List<UserEntity> mAllUsers;
     private List<AnimalEntity> mAllAnimals;
     private List<ReportEntity> mAllReports;
@@ -34,6 +38,8 @@ public class Repository {
         mUserDAO = wildlifeDB.userDAO();
         mAnimalDAO = wildlifeDB.animalDAO();
         mReportDAO = wildlifeDB.reportDAO();
+        mDailyDAO = wildlifeDB.dailyDAO();
+        mMonthlyDAO = wildlifeDB.monthlyDAO();
     }
 
     public void insertUser (UserEntity user) {
@@ -56,6 +62,24 @@ public class Repository {
 
     public void insertReport (ReportEntity report) {
         databaseExecutor.execute(() -> mReportDAO.insertReport(report));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertDailyReport (DailyEntity dailyReport) {
+        databaseExecutor.execute(() -> mDailyDAO.insertDailyReport(dailyReport));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertMonthlyReport (MonthlyEntity monthlyReport) {
+        databaseExecutor.execute(() -> mMonthlyDAO.insertMonthlyReport(monthlyReport));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -90,6 +114,24 @@ public class Repository {
         }
     }
 
+    public void updateDailyReport (DailyEntity dailyReport) {
+        databaseExecutor.execute(() -> mDailyDAO.updateDailyReport(dailyReport));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateMonthlyReport (MonthlyEntity monthlyReport) {
+        databaseExecutor.execute(() -> mMonthlyDAO.updateMonthlyReport(monthlyReport));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void deleteUser (UserEntity user) {
         databaseExecutor.execute(() -> mUserDAO.deleteUser(user));
         try {
@@ -110,6 +152,24 @@ public class Repository {
 
     public void deleteReport (ReportEntity report) {
         databaseExecutor.execute(() -> mReportDAO.deleteReport(report));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteDailyReport (DailyEntity dailyReport) {
+        databaseExecutor.execute(() -> mDailyDAO.deleteDailyReport(dailyReport));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteMonthlyReport (MonthlyEntity monthlyReport) {
+        databaseExecutor.execute(() -> mMonthlyDAO.deleteMonthlyReport(monthlyReport));
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -148,7 +208,7 @@ public class Repository {
     }
 
     public List<DailyEntity>getDailyReports() {
-        databaseExecutor.execute(() -> mDailyReport = mReportDAO.getDailyReports());
+        databaseExecutor.execute(() -> mDailyReport = mDailyDAO.getAllDailyReports());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -158,7 +218,7 @@ public class Repository {
     }
 
     public List<MonthlyEntity>getMonthlyReports() {
-        databaseExecutor.execute(() -> mMonthlyReport = mReportDAO.getMonthlyReports());
+        databaseExecutor.execute(() -> mMonthlyReport = mMonthlyDAO.getAllMonthlyReports());
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {

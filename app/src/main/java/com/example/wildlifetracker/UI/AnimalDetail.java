@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wildlifetracker.Database.Repository;
 import com.example.wildlifetracker.Entity.AnimalEntity;
+import com.example.wildlifetracker.Entity.DailyEntity;
 import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,7 +41,6 @@ public class AnimalDetail extends AppCompatActivity {
     EditText editLong;
     EditText editNotes;
     Repository repo = new Repository(getApplication());
-    long timeInMillis = Instant.now().toEpochMilli();
     int animalID;
     String animalName;
     String animalType;
@@ -208,6 +208,7 @@ public class AnimalDetail extends AppCompatActivity {
                 for (ReportEntity report: allReports) {
                     if (report.getAnimalName().equals(a.getName())) {
                         report.setAnimalMonthlyTravel(report.getAnimalMonthlyTravel() + distance[0]);
+                        a.setDistanceMonth(a.getDistanceMonth() + distance[0]);
                         repo.updateReport(report);
                     }
                 }
@@ -215,6 +216,7 @@ public class AnimalDetail extends AppCompatActivity {
                     for (ReportEntity report: allReports) {
                         if (report.getAnimalName().equals(a.getName())) {
                             report.setAnimalDailyTravel(report.getAnimalDailyTravel() + distance[0]);
+                            a.setDistanceDay(a.getDistanceDay() + distance[0]);
                             repo.updateReport(report);
                         }
                     }
@@ -222,6 +224,7 @@ public class AnimalDetail extends AppCompatActivity {
                     for (ReportEntity report: allReports) {
                         if (report.getAnimalName().equals(a.getName())) {
                             report.setAnimalDailyTravel(0.0f + distance[0]);
+                            a.setDistanceDay(0.0f + distance[0]);
                             repo.updateReport(report);
                         }
                     }
@@ -230,6 +233,7 @@ public class AnimalDetail extends AppCompatActivity {
                 for (ReportEntity report: allReports) {
                     if (report.getAnimalName().equals(a.getName())) {
                         report.setAnimalMonthlyTravel(0.0f + distance[0]);
+                        a.setDistanceMonth(0.0f + distance[0]);
                         repo.updateReport(report);
                     }
                 }
