@@ -64,8 +64,8 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
             String type = current.getAnimalType();
             Date date = current.getDateCreated();
             float dailyDistance = current.getAnimalDailyTravel();
-            String animalInfo = "Name: " + name + "   Type: " + type + "   Date Created: " + date
-                    + "   Daily Distance: " + dailyDistance;
+            String animalInfo = "Name: " + name + "   Type: " + type + "\nDate Created: " + date
+                    + "\nDaily Distance: " + dailyDistance +"\n\n";
             holder.dailyItemView.setText(animalInfo);
         } else {
             holder.dailyItemView.setText("No Daily Reports.");

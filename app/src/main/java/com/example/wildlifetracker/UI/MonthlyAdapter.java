@@ -65,8 +65,8 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.MonthlyV
             String type = current.getAnimalType();
             Date date = current.getDateCreated();
             float monthlyDistance = current.getAnimalMonthlyTravel();
-            String animalInfo = "Name: " + name + "   Type: " + type + "   Date Created: " + date
-                    + "   Monthly Distance: " + monthlyDistance;
+            String animalInfo = "Name: " + name + "   Type: " + type + "\nDate Created: " + date
+                    + "\nMonthly Distance: " + monthlyDistance + "\n\n";
             holder.monthlyItemView.setText(animalInfo);
         } else {
             holder.monthlyItemView.setText("No Monthly Reports");

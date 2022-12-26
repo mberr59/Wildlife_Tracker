@@ -3,6 +3,7 @@ package com.example.wildlifetracker.UI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -92,6 +93,26 @@ public class AnimalListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_animal_list, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        int reportLoadID = 0;
+        if (id == R.id.reports_daily) {
+            reportLoadID = 1;
+            Intent dailyReportIntent = new Intent(this, ReportActivity.class);
+            dailyReportIntent.putExtra("reportLoadID", reportLoadID);
+            startActivity(dailyReportIntent);
+            return true;
+        } else if (id == R.id.reports_monthly) {
+            reportLoadID = 2;
+            Intent monthlyReportIntent = new Intent(this, ReportActivity.class);
+            monthlyReportIntent.putExtra("reportLoadID", reportLoadID);
+            startActivity(monthlyReportIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void checkThatReportExist() {
