@@ -12,14 +12,20 @@ import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wildlifetracker.Database.Converter;
 import com.example.wildlifetracker.Database.Repository;
 import com.example.wildlifetracker.Entity.AnimalEntity;
+import com.example.wildlifetracker.Entity.DailyEntity;
+import com.example.wildlifetracker.Entity.MonthlyEntity;
 import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AnimalListActivity extends AppCompatActivity {
 
@@ -90,6 +96,17 @@ public class AnimalListActivity extends AppCompatActivity {
 
     public void checkThatReportExist() {
         Repository repo = new Repository(getApplication());
+
+        String format = "MM/dd/yyyy HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.US);
+        Date currentDate = new Date(System.currentTimeMillis());
+        Date parsedDate = null;
+        String dateString = sdf.format(currentDate);
+        try {
+            parsedDate = sdf.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         boolean animalFound = false;
         List<AnimalEntity> allAnimals = repo.getAllAnimals();
         List<ReportEntity> allAnimalsReport = repo.getAllReports();
@@ -101,10 +118,15 @@ public class AnimalListActivity extends AppCompatActivity {
                 }
             }
             if (!animalFound) {
-                Date currentDate = new Date(System.currentTimeMillis());
-                ReportEntity newAnimal = new ReportEntity(animal.getAnimalID(),
-                        animal.getName(), animal.getType(), currentDate);
-                repo.insertReport(newAnimal);
+                ReportEntity newReport = new ReportEntity(animal.getAnimalID(),
+                        animal.getName(), animal.getType(), parsedDate);
+                DailyEntity newDailyReport = new DailyEntity(animal.getAnimalID(),
+                        animal.getName(), animal.getType(), parsedDate, animal.getDistanceDay());
+                MonthlyEntity newMonthlyReport = new MonthlyEntity(animal.getAnimalID(),
+                        animal.getName(), animal.getType(), parsedDate, animal.getDistanceMonth());
+                repo.insertReport(newReport);
+                repo.insertDailyReport(newDailyReport);
+                repo.insertMonthlyReport(newMonthlyReport);
             }
             animalFound = false;
         }

@@ -11,74 +11,76 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wildlifetracker.Database.Converter;
-import com.example.wildlifetracker.Entity.AnimalEntity;
 import com.example.wildlifetracker.Entity.DailyEntity;
-import com.example.wildlifetracker.Entity.MonthlyEntity;
-import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 
+import java.util.Date;
 import java.util.List;
 
-public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder> {
-    class ReportViewHolder extends RecyclerView.ViewHolder {
-        private final TextView reportItemView;
+public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHolder>{
+    class DailyViewHolder extends RecyclerView.ViewHolder {
+        private final TextView dailyItemView;
 
-        private ReportViewHolder (View itemView) {
+        private DailyViewHolder (View itemView) {
             super (itemView);
-            reportItemView = itemView.findViewById(R.id.animalList);
+            dailyItemView = itemView.findViewById(R.id.dailyList);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    final ReportEntity currentReport = mReports.get(position);
-                    Intent intent = new Intent(reportContext, AnimalDetail.class);
+                    final DailyEntity currentReport = mDaily.get(position);
+                    Intent intent = new Intent(reportContext, ReportActivity.class);
                     intent.putExtra("reportID", currentReport.getReportID());
                     intent.putExtra("animalName", currentReport.getAnimalName());
                     intent.putExtra("animalType", currentReport.getAnimalType());
                     intent.putExtra("dateCreated", Converter.toTimestamp(currentReport.getDateCreated()));
+                    intent.putExtra("animalDailyTravel", currentReport.getAnimalDailyTravel());
                 }
             });
         }
     }
 
-    private List<ReportEntity> mReports;
+    private List<DailyEntity> mDaily;
     private final Context reportContext;
     private final LayoutInflater mInflator;
 
-    public ReportAdapter (Context context) {
+    public DailyAdapter (Context context) {
         mInflator = LayoutInflater.from(context);
         this.reportContext = context;
     }
 
     @NonNull
     @Override
-    public ReportAdapter.ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = mInflator.inflate(R.layout.monthly_list_items, parent, false);
-        return new ReportAdapter.ReportViewHolder(itemView);
+    public DailyAdapter.DailyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = mInflator.inflate(R.layout.daily_list_items, parent, false);
+        return new DailyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReportAdapter.ReportViewHolder holder, int position) {
-        if (mReports != null) {
-            ReportEntity current = mReports.get(position);
+    public void onBindViewHolder(@NonNull DailyAdapter.DailyViewHolder holder, int position) {
+        if (mDaily != null) {
+            DailyEntity current = mDaily.get(position);
             String name = current.getAnimalName();
             String type = current.getAnimalType();
-            String animalInfo = name + " " + type;
-            holder.reportItemView.setText(animalInfo);
+            Date date = current.getDateCreated();
+            float dailyDistance = current.getAnimalDailyTravel();
+            String animalInfo = "Name: " + name + "   Type: " + type + "   Date Created: " + date
+                    + "   Daily Distance: " + dailyDistance;
+            holder.dailyItemView.setText(animalInfo);
         } else {
-            holder.reportItemView.setText("No Animal Name or Type.");
+            holder.dailyItemView.setText("No Daily Reports.");
         }
     }
 
-    public void setAnimals (List<ReportEntity> reports) {
-        mReports = reports;
+    public void setDailyReport (List<DailyEntity> reports) {
+        mDaily = reports;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (mReports != null) {
-            return mReports.size();
+        if (mDaily != null) {
+            return mDaily.size();
         } else {
             return 0;
         }

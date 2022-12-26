@@ -30,11 +30,11 @@ public class LoginActivity extends AppCompatActivity {
         //TODO --UNCOMMENT THE FOLLOWING CODE TO CREATE THE
         // "TEST" USER AND "ADMIN" USER--
 
-         /* Repository repo = new Repository(getApplication());
+        /*Repository repo = new Repository(getApplication());
         UserEntity admin = new UserEntity(1, "admin", "admin");
         UserEntity test = new UserEntity(2, "test", "test");
         repo.insertUser(admin);
-        repo.insertUser(test); */
+        repo.insertUser(test);*/
     }
 
     public void openApp(View view) {

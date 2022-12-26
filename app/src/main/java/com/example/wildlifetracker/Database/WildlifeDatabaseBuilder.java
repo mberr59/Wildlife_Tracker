@@ -4,6 +4,7 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 import androidx.room.Room;
+import androidx.room.TypeConverters;
 
 import com.example.wildlifetracker.DAO.AnimalDAO;
 import com.example.wildlifetracker.DAO.DailyDAO;
@@ -17,7 +18,8 @@ import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.Entity.UserEntity;
 
 @Database(entities = {UserEntity.class, AnimalEntity.class, ReportEntity.class,
-        DailyEntity.class, MonthlyEntity.class}, version = 5, exportSchema = false)
+        DailyEntity.class, MonthlyEntity.class}, version = 6, exportSchema = false)
+@TypeConverters ({Converter.class})
 public abstract class WildlifeDatabaseBuilder extends RoomDatabase {
 
     public abstract UserDAO userDAO();

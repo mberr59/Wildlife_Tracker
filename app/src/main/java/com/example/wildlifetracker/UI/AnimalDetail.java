@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.wildlifetracker.Database.Repository;
 import com.example.wildlifetracker.Entity.AnimalEntity;
 import com.example.wildlifetracker.Entity.DailyEntity;
+import com.example.wildlifetracker.Entity.MonthlyEntity;
 import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,6 +49,7 @@ public class AnimalDetail extends AppCompatActivity {
     String animalLong;
     float monthlyTravelDistance;
     float dailyTravelDistance;
+    int reportID;
     String animalNotes;
     LocalDate currentDate = LocalDate.now();
     int dayOfTheMonth;
@@ -180,7 +182,8 @@ public class AnimalDetail extends AppCompatActivity {
 
     public void simAnimalMovement(View view) {
         ArrayList<AnimalEntity> allAnimals = new ArrayList<>(repo.getAllAnimals());
-        List<ReportEntity> allReports = repo.getAllReports();
+        List<MonthlyEntity> allMonthlyReports = repo.getMonthlyReports();
+        List<DailyEntity> allDailyReports = repo.getDailyReports();
         LocalDate currentDate = LocalDate.now();
         double [] currentLocation;
         float[] distance = new float[1];
@@ -205,35 +208,39 @@ public class AnimalDetail extends AppCompatActivity {
             a.setLatitude(Double.toString(endMovement.latitude));
             a.setLongitude(Double.toString(endMovement.longitude));
             if (currentDate.getMonthValue() == a.getMonthOfYear()) {
-                for (ReportEntity report: allReports) {
+                for (MonthlyEntity report: allMonthlyReports) {
                     if (report.getAnimalName().equals(a.getName())) {
                         report.setAnimalMonthlyTravel(report.getAnimalMonthlyTravel() + distance[0]);
                         a.setDistanceMonth(a.getDistanceMonth() + distance[0]);
+                        repo.updateMonthlyReport(report);
                         repo.updateReport(report);
                     }
                 }
                 if (currentDate.getDayOfMonth() == a.getDayOfMonth()) {
-                    for (ReportEntity report: allReports) {
+                    for (DailyEntity report: allDailyReports) {
                         if (report.getAnimalName().equals(a.getName())) {
                             report.setAnimalDailyTravel(report.getAnimalDailyTravel() + distance[0]);
                             a.setDistanceDay(a.getDistanceDay() + distance[0]);
+                            repo.updateDailyReport(report);
                             repo.updateReport(report);
                         }
                     }
                 } else {
-                    for (ReportEntity report: allReports) {
+                    for (DailyEntity report: allDailyReports) {
                         if (report.getAnimalName().equals(a.getName())) {
                             report.setAnimalDailyTravel(0.0f + distance[0]);
                             a.setDistanceDay(0.0f + distance[0]);
+                            repo.updateDailyReport(report);
                             repo.updateReport(report);
                         }
                     }
                 }
             } else {
-                for (ReportEntity report: allReports) {
+                for (MonthlyEntity report: allMonthlyReports) {
                     if (report.getAnimalName().equals(a.getName())) {
                         report.setAnimalMonthlyTravel(0.0f + distance[0]);
                         a.setDistanceMonth(0.0f + distance[0]);
+                        repo.updateMonthlyReport(report);
                         repo.updateReport(report);
                     }
                 }

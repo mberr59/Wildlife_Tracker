@@ -11,74 +11,77 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wildlifetracker.Database.Converter;
-import com.example.wildlifetracker.Entity.AnimalEntity;
-import com.example.wildlifetracker.Entity.DailyEntity;
 import com.example.wildlifetracker.Entity.MonthlyEntity;
 import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 
+import java.util.Date;
 import java.util.List;
 
-public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.ReportViewHolder> {
-    class ReportViewHolder extends RecyclerView.ViewHolder {
-        private final TextView reportItemView;
+public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.MonthlyViewHolder>{
+    class MonthlyViewHolder extends RecyclerView.ViewHolder {
+        private final TextView monthlyItemView;
 
-        private ReportViewHolder (View itemView) {
+        private MonthlyViewHolder (View itemView) {
             super (itemView);
-            reportItemView = itemView.findViewById(R.id.animalList);
+            monthlyItemView = itemView.findViewById(R.id.monthlyList);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    final ReportEntity currentReport = mReports.get(position);
-                    Intent intent = new Intent(reportContext, AnimalDetail.class);
+                    final MonthlyEntity currentReport = mMonthly.get(position);
+                    Intent intent = new Intent(reportContext, ReportActivity.class);
                     intent.putExtra("reportID", currentReport.getReportID());
                     intent.putExtra("animalName", currentReport.getAnimalName());
                     intent.putExtra("animalType", currentReport.getAnimalType());
                     intent.putExtra("dateCreated", Converter.toTimestamp(currentReport.getDateCreated()));
+                    intent.putExtra("animalMonthlyTravel", currentReport.getAnimalMonthlyTravel());
                 }
             });
         }
     }
 
-    private List<ReportEntity> mReports;
+    private List<MonthlyEntity> mMonthly;
     private final Context reportContext;
     private final LayoutInflater mInflator;
 
-    public ReportAdapter (Context context) {
+    public MonthlyAdapter (Context context) {
         mInflator = LayoutInflater.from(context);
         this.reportContext = context;
     }
 
     @NonNull
     @Override
-    public ReportAdapter.ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MonthlyAdapter.MonthlyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = mInflator.inflate(R.layout.monthly_list_items, parent, false);
-        return new ReportAdapter.ReportViewHolder(itemView);
+        return new MonthlyAdapter.MonthlyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ReportAdapter.ReportViewHolder holder, int position) {
-        if (mReports != null) {
-            ReportEntity current = mReports.get(position);
+    public void onBindViewHolder(@NonNull MonthlyAdapter.MonthlyViewHolder holder, int position) {
+        if (mMonthly != null) {
+            MonthlyEntity current = mMonthly.get(position);
             String name = current.getAnimalName();
             String type = current.getAnimalType();
-            String animalInfo = name + " " + type;
-            holder.reportItemView.setText(animalInfo);
+            Date date = current.getDateCreated();
+            float monthlyDistance = current.getAnimalMonthlyTravel();
+            String animalInfo = "Name: " + name + "   Type: " + type + "   Date Created: " + date
+                    + "   Monthly Distance: " + monthlyDistance;
+            holder.monthlyItemView.setText(animalInfo);
         } else {
-            holder.reportItemView.setText("No Animal Name or Type.");
+            holder.monthlyItemView.setText("No Monthly Reports");
         }
     }
 
-    public void setAnimals (List<ReportEntity> reports) {
-        mReports = reports;
+    public void setMonthlyReports (List<MonthlyEntity> reports) {
+        mMonthly = reports;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (mReports != null) {
-            return mReports.size();
+        if (mMonthly != null) {
+            return mMonthly.size();
         } else {
             return 0;
         }
