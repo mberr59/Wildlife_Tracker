@@ -75,4 +75,25 @@ public class LoginActivity extends AppCompatActivity {
         }
         return validLogin;
     }
+
+    public void registerUser(View view) {
+        int userID = getIntent().getIntExtra("userID", -1);
+        String username = editUsername.getText().toString();
+        String password = editPassword.getText().toString();
+        Repository repo = new Repository(getApplication());
+        List<UserEntity> usersList = repo.getAllUsers();
+        for(UserEntity user : usersList) {
+            if(username.equals(user.getUsername())) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle("User Already Exists");
+                builder.setMessage("User " + username + " already exist. Please enter a different username.");
+                builder.setNegativeButton("OK", (dialog, which) -> {});
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } else {
+                UserEntity newUser = new UserEntity(userID, username, password);
+                repo.insertUser(newUser);
+            }
+        }
+    }
 }

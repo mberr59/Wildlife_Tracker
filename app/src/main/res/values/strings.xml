@@ -26,4 +26,5 @@
     <string name="animal_notes">Animal Notes</string>
     <string name="animal_map">Track</string>
     <string name="movement_sim">Simulate Movement</string>
+    <string name="register_user">Register</string>
 </resources>
