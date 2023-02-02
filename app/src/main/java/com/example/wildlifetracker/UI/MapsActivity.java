@@ -17,8 +17,6 @@ import com.example.wildlifetracker.databinding.ActivityMapsBinding;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
-    private ActivityMapsBinding binding;
     private double[] trackerCoordinates = new double[2];
     private String trackedName;
 
@@ -28,12 +26,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         trackerCoordinates = getIntent().getDoubleArrayExtra("coordinates");
         trackedName = getIntent().getStringExtra("trackedName");
 
-        binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        com.example.wildlifetracker.databinding.ActivityMapsBinding binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
     }
 
@@ -48,14 +47,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        // Add a marker in Guntersville State Park and move the camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(AnimalDetail.park));
-        mMap.setMaxZoomPreference(16);
-        mMap.setMinZoomPreference(10);
+        // Add a marker in Guntersville State Park and move the camera to the location.
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(AnimalDetail.park));
+        googleMap.setMaxZoomPreference(16);
+        googleMap.setMinZoomPreference(10);
         LatLng trackedAnimal = new LatLng(trackerCoordinates[0], trackerCoordinates[1]);
-        mMap.addMarker(new MarkerOptions().position(trackedAnimal).title(trackedName));
+        googleMap.addMarker(new MarkerOptions().position(trackedAnimal).title(trackedName));
     }
 
     public boolean onCreateMapMenu(Menu menu) {
@@ -64,10 +62,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public boolean onMapItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
+        if (item.getItemId() == android.R.id.home) {
+            this.finish();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

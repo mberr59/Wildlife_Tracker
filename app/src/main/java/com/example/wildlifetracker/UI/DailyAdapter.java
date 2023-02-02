@@ -14,6 +14,8 @@ import com.example.wildlifetracker.Database.Converter;
 import com.example.wildlifetracker.Entity.DailyEntity;
 import com.example.wildlifetracker.R;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -24,18 +26,15 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
         private DailyViewHolder (View itemView) {
             super (itemView);
             dailyItemView = itemView.findViewById(R.id.dailyList);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final DailyEntity currentReport = mDaily.get(position);
-                    Intent intent = new Intent(reportContext, ReportActivity.class);
-                    intent.putExtra("reportID", currentReport.getReportID());
-                    intent.putExtra("animalName", currentReport.getAnimalName());
-                    intent.putExtra("animalType", currentReport.getAnimalType());
-                    intent.putExtra("dateCreated", Converter.toTimestamp(currentReport.getDateCreated()));
-                    intent.putExtra("animalDailyTravel", currentReport.getAnimalDailyTravel());
-                }
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                final DailyEntity currentReport = mDaily.get(position);
+                Intent intent = new Intent(reportContext, ReportActivity.class);
+                intent.putExtra("reportID", currentReport.getReportID());
+                intent.putExtra("animalName", currentReport.getAnimalName());
+                intent.putExtra("animalType", currentReport.getAnimalType());
+                intent.putExtra("dateCreated", Converter.toTimestamp(currentReport.getDateCreated()));
+                intent.putExtra("animalDailyTravel", currentReport.getAnimalDailyTravel());
             });
         }
     }
@@ -64,8 +63,9 @@ public class DailyAdapter extends RecyclerView.Adapter<DailyAdapter.DailyViewHol
             String type = current.getAnimalType();
             Date date = current.getDateCreated();
             float dailyDistance = current.getAnimalDailyTravel();
+            float shownDistance = BigDecimal.valueOf(dailyDistance).setScale(2, RoundingMode.HALF_UP).floatValue();
             String animalInfo = "Name: " + name + "   Type: " + type + "\nDate Created: " + date
-                    + "\nDaily Distance: " + dailyDistance +" meters\n\n";
+                    + "\nDaily Distance: " + shownDistance +" meters\n\n";
             holder.dailyItemView.setText(animalInfo);
         } else {
             holder.dailyItemView.setText("No Daily Reports.");

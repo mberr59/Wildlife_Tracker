@@ -12,9 +12,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wildlifetracker.Database.Converter;
 import com.example.wildlifetracker.Entity.MonthlyEntity;
-import com.example.wildlifetracker.Entity.ReportEntity;
 import com.example.wildlifetracker.R;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 
@@ -25,18 +26,15 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.MonthlyV
         private MonthlyViewHolder (View itemView) {
             super (itemView);
             monthlyItemView = itemView.findViewById(R.id.monthlyList);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int position = getAdapterPosition();
-                    final MonthlyEntity currentReport = mMonthly.get(position);
-                    Intent intent = new Intent(reportContext, ReportActivity.class);
-                    intent.putExtra("reportID", currentReport.getReportID());
-                    intent.putExtra("animalName", currentReport.getAnimalName());
-                    intent.putExtra("animalType", currentReport.getAnimalType());
-                    intent.putExtra("dateCreated", Converter.toTimestamp(currentReport.getDateCreated()));
-                    intent.putExtra("animalMonthlyTravel", currentReport.getAnimalMonthlyTravel());
-                }
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                final MonthlyEntity currentReport = mMonthly.get(position);
+                Intent intent = new Intent(reportContext, ReportActivity.class);
+                intent.putExtra("reportID", currentReport.getReportID());
+                intent.putExtra("animalName", currentReport.getAnimalName());
+                intent.putExtra("animalType", currentReport.getAnimalType());
+                intent.putExtra("dateCreated", Converter.toTimestamp(currentReport.getDateCreated()));
+                intent.putExtra("animalMonthlyTravel", currentReport.getAnimalMonthlyTravel());
             });
         }
     }
@@ -65,8 +63,9 @@ public class MonthlyAdapter extends RecyclerView.Adapter<MonthlyAdapter.MonthlyV
             String type = current.getAnimalType();
             Date date = current.getDateCreated();
             float monthlyDistance = current.getAnimalMonthlyTravel();
+            float shownDistance = BigDecimal.valueOf(monthlyDistance).setScale(2, RoundingMode.HALF_UP).floatValue();
             String animalInfo = "Name: " + name + "   Type: " + type + "\nDate Created: " + date
-                    + "\nMonthly Distance: " + monthlyDistance + " meters\n\n";
+                    + "\nMonthly Distance: " + shownDistance + " meters\n\n";
             holder.monthlyItemView.setText(animalInfo);
         } else {
             holder.monthlyItemView.setText("No Monthly Reports");
