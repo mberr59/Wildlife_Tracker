@@ -8,23 +8,21 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.wildlifetracker.Entity.DailyEntity;
-import com.example.wildlifetracker.Entity.MonthlyEntity;
-import com.example.wildlifetracker.Entity.ReportEntity;
 
 import java.util.List;
 
 @Dao
-public interface ReportDAO {
+public interface DailyDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertReport(ReportEntity report);
+    void insertDailyReport(DailyEntity report);
 
     @Update
-    void updateReport(ReportEntity report);
+    void updateDailyReport(DailyEntity report);
 
     @Delete
-    void deleteReport(ReportEntity report);
+    void deleteDailyReport(DailyEntity report);
 
-    @Query("SELECT * FROM reports ORDER BY reportID ASC")
-    List<ReportEntity> getAllReports();
+    @Query("SELECT * FROM dailyReport ORDER BY animalDailyTravel DESC")
+    List<DailyEntity> getAllDailyReports();
 }

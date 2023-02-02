@@ -53,6 +53,11 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
         this.animalContext = context;
     }
 
+    public void setFilteredList(List<AnimalEntity> filteredList) {
+        this.mAnimals = filteredList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public AnimalAdapter.AnimalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

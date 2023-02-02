@@ -4,23 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity(tableName = "reports")
 public class ReportEntity {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     private int reportID;
 
     private String animalName;
     private String animalType;
-    private float animalDailyTravel;
-    private float animalMonthlyTravel;
+    private Date dateCreated;
 
-    public ReportEntity (int reportID, String animalName, String animalType, float animalDailyTravel,
-                         float animalMonthlyTravel) {
+
+    public ReportEntity (int reportID, String animalName, String animalType, Date dateCreated) {
         this.reportID = reportID;
         this.animalName = animalName;
         this.animalType = animalType;
-        this.animalDailyTravel = animalDailyTravel;
-        this.animalMonthlyTravel = animalMonthlyTravel;
+        this.dateCreated = dateCreated;
     }
 
     @NonNull
@@ -30,8 +30,7 @@ public class ReportEntity {
                 "reportID=" + reportID +
                 ", animalName='" + animalName + '\'' +
                 ", animalType='" + animalType + '\'' +
-                ", animalDailyTravel=" + animalDailyTravel +
-                ", animalMonthlyTravel=" + animalMonthlyTravel +
+                ", dateCreated='" + dateCreated + '\'' +
                 '}';
     }
 
@@ -59,19 +58,7 @@ public class ReportEntity {
         this.animalType = animalType;
     }
 
-    public float getAnimalDailyTravel() {
-        return animalDailyTravel;
-    }
+    public Date getDateCreated() { return dateCreated;}
 
-    public void setAnimalDailyTravel(float animalDailyTravel) {
-        this.animalDailyTravel = animalDailyTravel;
-    }
 
-    public float getAnimalMonthlyTravel() {
-        return animalMonthlyTravel;
-    }
-
-    public void setAnimalMonthlyTravel(float animalMonthlyTravel) {
-        this.animalMonthlyTravel = animalMonthlyTravel;
-    }
 }

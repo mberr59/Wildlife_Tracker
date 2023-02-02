@@ -3,18 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Micah/AndroidStudioProjects/WildlifeTracker/app/src/main/res/layout/activity_animal_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Micah/AndroidStudioProjects/WildlifeTracker/app/src/main/res/layout/animal_list_items.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Micah/AndroidStudioProjects/WildlifeTracker/app/src/main/res/menu/menu_animal_detail.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Micah/AndroidStudioProjects/WildlifeTracker/app/src/main/res/menu/menu_animal_map.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2265" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2265" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/activity_animal_detail.xml" value="0.253125" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/activity_animal_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/activity_login.xml" value="0.253125" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/activity_maps.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/activity_report.xml" value="0.253125" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/activity_term_list.xml" value="0.253125" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/animal_list_items.xml" value="0.253125" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/daily_list_items.xml" value="0.253125" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/layout/monthly_list_items.xml" value="0.253125" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/menu/menu_animal_detail.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/menu/menu_animal_list.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/menu/menu_animal_map.xml" value="0.253125" />
+        <entry key="..\:/Users/micah/AndroidStudioProjects/Wildlife_Tracker/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2265" />
       </map>
     </option>
   </component>
